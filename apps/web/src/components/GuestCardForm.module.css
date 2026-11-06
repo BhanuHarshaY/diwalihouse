@@ -1,0 +1,58 @@
+.form {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.placeCard {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px dashed color-mix(in oklab, var(--rule-on-paper) 60%, transparent);
+}
+
+.placeEmblem {
+  flex: none;
+  width: 72px;
+  height: 72px;
+}
+
+.emptyEmblem {
+  display: block;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 1.5px dashed var(--rule-on-paper);
+}
+
+.placeText {
+  min-width: 0;
+}
+
+.placeText :global(.type-eyebrow) {
+  color: var(--color-vermilion-700);
+}
+
+.placeName {
+  margin-top: 0.35rem;
+  overflow-wrap: anywhere;
+}
+
+.placeName[data-empty] {
+  color: color-mix(in oklab, var(--ink-on-paper-muted) 45%, transparent);
+}
+
+.alert {
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  color: var(--color-ivory-50);
+  background: var(--color-vermilion-700);
+  border-radius: 2px;
+}
+
+.note {
+  font-size: 0.875rem;
+  line-height: 1.45;
+  text-align: center;
+  color: var(--ink-on-paper-muted);
+}

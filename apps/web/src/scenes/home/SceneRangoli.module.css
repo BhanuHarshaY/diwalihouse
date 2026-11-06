@@ -1,0 +1,133 @@
+.scene {
+  position: relative;
+  /* Rings rotate in as squares; their corners must not widen the page.
+     clip, not hidden, so the sticky stage keeps working. */
+  overflow-x: clip;
+  background:
+    var(--grain-light) repeat,
+    radial-gradient(70% 60% at 65% 55%, var(--color-night-800), var(--color-night-900) 70%);
+}
+
+.scene[data-mode='camera'] {
+  height: 260svh;
+}
+
+.stage {
+  display: grid;
+  gap: clamp(2rem, 5vw, 3rem);
+  align-items: center;
+  justify-items: center;
+  padding: clamp(4rem, 10vw, 6rem) 1.25rem;
+}
+
+.scene[data-mode='camera'] .stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  padding-block: clamp(4.5rem, 10svh, 6rem) clamp(1.5rem, 5svh, 3rem);
+  align-content: center;
+}
+
+@media (min-width: 64rem) {
+  .stage {
+    grid-template-columns: minmax(0, 26rem) auto;
+    justify-content: center;
+    column-gap: clamp(3rem, 7vw, 7rem);
+  }
+}
+
+.copy {
+  max-width: 34rem;
+  text-align: center;
+}
+
+@media (min-width: 64rem) {
+  .copy {
+    text-align: left;
+  }
+}
+
+.eyebrow {
+  color: var(--color-marigold-400);
+}
+
+.copy h2 {
+  margin-top: 0.75rem;
+}
+
+.hi {
+  margin-top: 0.25rem;
+  color: var(--color-marigold-200);
+}
+
+.body {
+  margin-top: 1.25rem;
+  color: var(--ink-on-night);
+}
+
+.names {
+  margin-top: 1rem;
+  color: var(--ink-on-night-muted);
+}
+
+/* Phones in the pinned scene: keep the copy short so the pattern fits. */
+@media (max-width: 63.98rem) {
+  .scene[data-mode='camera'] .names {
+    display: none;
+  }
+  .scene[data-mode='camera'] .copy h2 {
+    font-size: clamp(2.25rem, 1.5rem + 3vw, 3rem);
+  }
+}
+
+.rangoli {
+  position: relative;
+  width: min(88vw, 640px);
+  aspect-ratio: 1;
+}
+
+.scene[data-mode='camera'] .rangoli {
+  width: min(88vw, 50svh, 640px);
+}
+
+@media (min-width: 64rem) {
+  .scene[data-mode='camera'] .rangoli {
+    width: min(46vw, 78svh, 680px);
+  }
+}
+
+.layer,
+.idle {
+  position: absolute;
+  inset: 0;
+}
+
+.scene[data-mode='camera'] .layer {
+  will-change: transform, opacity;
+}
+
+.idle svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.scene[data-assembled][data-playing] .idle[data-idle='cw'] {
+  animation: turn 140s linear infinite;
+}
+.scene[data-assembled][data-playing] .idle[data-idle='ccw'] {
+  animation: turn 180s linear infinite reverse;
+}
+
+@keyframes turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .idle {
+    animation: none !important;
+  }
+}

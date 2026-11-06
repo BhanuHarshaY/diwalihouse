@@ -1,0 +1,355 @@
+/* The Music Mehfil: a turntable stage, a paper request slip, the queue. */
+
+.layout {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+@media (min-width: 64rem) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr) 19rem;
+    align-items: start;
+  }
+  .side {
+    position: sticky;
+    top: 1.5rem;
+  }
+}
+
+.main,
+.side {
+  display: grid;
+  gap: 1.25rem;
+  min-width: 0;
+}
+
+/* The stage: a jamun wall inside a brass hairline, the record or the player on it. */
+.stage {
+  display: grid;
+  gap: clamp(1rem, 3vw, 1.75rem);
+  align-items: center;
+  padding: clamp(1.25rem, 4vw, 2rem);
+  border-radius: 4px;
+  background: var(--color-jamun-700);
+  box-shadow:
+    inset 0 0 0 6px var(--color-jamun-900),
+    inset 0 0 0 7.5px var(--color-brass-500),
+    0 6px 0 var(--color-night-950);
+}
+
+@media (min-width: 40rem) {
+  .stage:not(:has(.player)) {
+    grid-template-columns: minmax(10rem, 15rem) minmax(0, 1fr);
+  }
+}
+
+.record {
+  display: block;
+  width: min(100%, 15rem);
+  justify-self: center;
+}
+
+.disc {
+  transform-box: view-box;
+  transform-origin: 96px 100px;
+}
+
+/* 33⅓ turns a minute. */
+.disc[data-spinning] {
+  animation: turn 1.8s linear infinite;
+}
+
+@keyframes turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .disc[data-spinning] {
+    animation: none;
+  }
+}
+
+.player {
+  position: relative;
+  display: grid;
+  gap: 0.5rem;
+}
+
+/* YouTube's terms want its player visible and at least 200 px; it gets the stage. */
+.playerFrame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  min-height: 200px;
+  background: var(--color-night-950);
+}
+
+.playerFrame :global(iframe) {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.playerNote {
+  color: var(--color-ivory-200);
+}
+
+.nowText {
+  display: grid;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.onAir {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-marigold-200);
+}
+
+.liveDot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--live);
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--live) 22%, transparent);
+}
+
+.title {
+  overflow-wrap: anywhere;
+  color: var(--color-ivory-50);
+}
+
+.idle {
+  color: var(--color-ivory-100);
+}
+
+.muted {
+  color: var(--ink-on-night-muted);
+}
+
+.stage .muted {
+  color: var(--color-ivory-300);
+}
+
+.credit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-weight: 600;
+}
+
+.dedication {
+  font-family: var(--font-story);
+  font-weight: 400;
+  font-style: italic;
+}
+
+.controls {
+  display: grid;
+  gap: 0.6rem;
+}
+
+/* Empty, the live region takes no room but stays in the accessibility tree. */
+.notice:empty {
+  min-height: 0;
+}
+
+.actions:empty {
+  display: none;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.notice {
+  min-height: 1.45em;
+  color: var(--danger-on-night);
+}
+
+.slip {
+  display: grid;
+  gap: 1rem;
+}
+
+.slipFoot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+}
+
+.queue {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.songs {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.song {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  gap: 0.25rem 0.75rem;
+  align-items: start;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--rule-on-night);
+  border-radius: 4px;
+  background: var(--surface-night-raised);
+}
+
+@media (min-width: 40rem) {
+  .song {
+    grid-template-columns: 2rem minmax(0, 1fr) auto;
+    align-items: center;
+  }
+}
+
+.position {
+  color: var(--color-marigold-400);
+  font-variant-numeric: tabular-nums;
+}
+
+.songText {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.songTitle {
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+
+.songActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  grid-column: 2;
+}
+
+@media (min-width: 40rem) {
+  .songActions {
+    grid-column: 3;
+    justify-content: flex-end;
+  }
+}
+
+.votes {
+  color: var(--ink-on-night-muted);
+}
+
+/* A vote: a small brass token that fills in when it's yours. */
+.vote {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-width: 3.25rem;
+  min-height: 2.5rem;
+  padding: 0 0.75rem;
+  border: 1.5px solid var(--color-brass-500);
+  border-radius: 999px;
+  color: var(--color-brass-400);
+  background: transparent;
+  cursor: pointer;
+}
+
+.vote[aria-pressed='true'] {
+  color: var(--color-night-950);
+  background: var(--color-marigold-400);
+  border-color: var(--color-marigold-400);
+}
+
+.vote:focus-visible {
+  outline: 3px solid var(--color-ivory-50);
+  outline-offset: 2px;
+}
+
+.panel {
+  display: grid;
+  gap: 0.85rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--rule-on-night);
+  border-radius: 4px;
+  background: var(--surface-night-raised);
+}
+
+.panelLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-marigold-200);
+}
+
+.people {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.person {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.25rem 0.75rem 0.25rem 0.25rem;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--color-night-950) 45%, transparent);
+  font-weight: 600;
+}
+
+.delegates {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.delegates legend {
+  margin-bottom: 0.5rem;
+}
+
+.delegate {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.5rem;
+  cursor: pointer;
+}
+
+.delegate input {
+  width: 1.1rem;
+  height: 1.1rem;
+  accent-color: var(--color-marigold-400);
+}
+
+.played {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.status {
+  padding: 1.5rem;
+  text-align: center;
+  color: var(--ink-on-night-muted);
+}

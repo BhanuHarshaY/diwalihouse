@@ -1,0 +1,31 @@
+{
+  "name": "@diwali/realtime",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev --port 8787",
+    "deploy": "wrangler deploy",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "smoke": "node scripts/smoke.mjs"
+  },
+  "dependencies": {
+    "@diwali/charades": "workspace:*",
+    "@diwali/game-kit": "workspace:*",
+    "@diwali/mehfil": "workspace:*",
+    "@diwali/raja-mantri": "workspace:*",
+    "@diwali/rangoli": "workspace:*",
+    "@diwali/realtime-protocol": "workspace:*",
+    "@diwali/tambola": "workspace:*",
+    "@diwali/teen-patti": "workspace:*"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261106.1",
+    "@diwali/tsconfig": "workspace:*",
+    "@types/node": "^22.19.0",
+    "vitest": "^5.1.0",
+    "wrangler": "^4.158.0"
+  }
+}

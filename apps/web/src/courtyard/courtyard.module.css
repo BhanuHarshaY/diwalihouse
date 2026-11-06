@@ -1,0 +1,293 @@
+/* The Rangoli Courtyard: a framed earth floor and the powder tray beside it. */
+
+.layout {
+  display: grid;
+  gap: clamp(1.25rem, 3vw, 2rem);
+}
+
+@media (min-width: 64rem) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr) 20rem;
+    align-items: start;
+  }
+  .controls {
+    position: sticky;
+    top: 1.5rem;
+  }
+}
+
+.stage {
+  display: grid;
+  gap: 0.75rem;
+  justify-items: center;
+  min-width: 0;
+}
+
+/* Square, and never taller than the screen leaves room for. */
+.floor {
+  position: relative;
+  width: min(100%, calc(100svh - 13rem));
+  aspect-ratio: 1;
+  box-shadow: 0 6px 0 var(--color-night-950);
+}
+
+.band {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* The field sits just inside the brass hairline (47/1000 of the floor). */
+.field {
+  position: absolute;
+  inset: 4.7%;
+  background: var(--color-mitti-900);
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.canvas[data-drawing] {
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.canvas[data-drawing]:focus-visible {
+  outline: 3px solid var(--color-marigold-200);
+  outline-offset: 4px;
+}
+
+.guides {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.hint {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 22%;
+  text-align: center;
+  color: var(--color-mitti-100);
+  pointer-events: none;
+}
+
+.caption {
+  color: var(--ink-on-night-muted);
+  text-align: center;
+}
+
+.controls {
+  display: grid;
+  gap: 1.25rem;
+  align-content: start;
+}
+
+.group {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.group legend {
+  margin-bottom: 0.6rem;
+  color: var(--color-marigold-200);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* Eight powders: one row on a phone, two rows of four in the side column. */
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 2.75rem));
+  gap: 0.4rem;
+}
+
+@media (min-width: 64rem) {
+  .swatches {
+    grid-template-columns: repeat(4, 2.75rem);
+    gap: 0.6rem;
+  }
+}
+
+.choice {
+  position: relative;
+  cursor: pointer;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.75rem;
+  padding: 0.35rem 0.85rem 0.35rem 0.6rem;
+  border: 1.5px solid var(--rule-on-night);
+  border-radius: 999px;
+  color: var(--ink-on-night);
+  font-weight: 600;
+}
+
+input:checked + .chip {
+  border-color: var(--color-marigold-400);
+  color: var(--color-night-950);
+  background: var(--color-marigold-400);
+}
+
+input:focus-visible + .chip,
+input:focus-visible + .swatch {
+  outline: 3px solid var(--color-ivory-50);
+  outline-offset: 3px;
+}
+
+.swatch {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 2px color-mix(in oklab, var(--color-night-950) 35%, transparent);
+  transition: transform 160ms ease;
+}
+
+input:checked + .swatch {
+  box-shadow:
+    inset 0 0 0 2px color-mix(in oklab, var(--color-night-950) 35%, transparent),
+    0 0 0 3px var(--color-night-900),
+    0 0 0 5px var(--color-ivory-50);
+  transform: scale(1.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swatch {
+    transition: none;
+  }
+}
+
+.sizeDot {
+  display: block;
+  border-radius: 50%;
+  background: currentColor;
+}
+.sizeDot[data-size='fine'] {
+  width: 6px;
+  height: 6px;
+}
+.sizeDot[data-size='medium'] {
+  width: 11px;
+  height: 11px;
+}
+.sizeDot[data-size='bold'] {
+  width: 18px;
+  height: 18px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.75rem;
+  cursor: pointer;
+}
+
+.toggle input {
+  width: 1.1rem;
+  height: 1.1rem;
+  accent-color: var(--color-marigold-400);
+}
+
+.notice {
+  min-height: 1.45em;
+  color: var(--danger-on-night);
+}
+
+.panel {
+  display: grid;
+  gap: 0.85rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--rule-on-night);
+  border-radius: 4px;
+  background: var(--surface-night-raised);
+}
+
+.panel > .type-label,
+.panel :global(.type-label) {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-marigold-200);
+}
+
+.liveDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--live);
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--live) 22%, transparent);
+}
+
+.people {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.person {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.25rem 0.75rem 0.25rem 0.25rem;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--color-night-950) 45%, transparent);
+  font-weight: 600;
+}
+
+.artists {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.artists li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px dashed var(--rule-on-night);
+}
+
+.muted {
+  color: var(--ink-on-night-muted);
+}
+
+.status {
+  padding: 1.5rem;
+  text-align: center;
+  color: var(--ink-on-night-muted);
+}

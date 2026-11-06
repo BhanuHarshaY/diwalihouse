@@ -1,0 +1,241 @@
+.scene {
+  position: relative;
+  display: grid;
+  /* The light spill and petal shower are wider than the doorway on purpose. */
+  overflow-x: clip;
+  justify-items: center;
+  gap: clamp(2.5rem, 6vw, 3.5rem);
+  padding: clamp(7rem, 16vw, 11rem) 1.25rem clamp(5rem, 12vw, 8rem);
+  background:
+    var(--grain-light) repeat,
+    linear-gradient(var(--color-night-900), var(--color-night-950));
+}
+
+.header {
+  max-width: 38rem;
+  text-align: center;
+}
+
+/* Wide screens: the invitation to enter sits beside the doorway, both in view. */
+@media (min-width: 64rem) {
+  .scene {
+    grid-template-columns: minmax(0, 30rem) auto;
+    justify-content: center;
+    align-items: center;
+    column-gap: clamp(4rem, 8vw, 8rem);
+    min-height: 100svh;
+  }
+  .header {
+    text-align: left;
+  }
+}
+
+.eyebrow {
+  color: var(--color-marigold-400);
+}
+
+.header h2 {
+  margin-top: 1rem;
+}
+
+.hi {
+  margin-top: 0.5rem;
+  color: var(--color-marigold-200);
+}
+
+.lede {
+  margin-top: 1.25rem;
+  color: var(--ink-on-night-muted);
+}
+
+/* The doorway keeps the artwork's 360 × 620 proportions at every width. */
+.doorway {
+  position: relative;
+  width: min(100%, 25rem);
+  aspect-ratio: 360 / 620;
+  perspective: 1600px;
+  container-type: inline-size;
+}
+
+@media (min-width: 48rem) {
+  .doorway {
+    width: 27rem;
+  }
+}
+
+.frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.interior {
+  position: absolute;
+  display: grid;
+  align-content: start;
+  overflow: hidden;
+  background:
+    var(--grain-dark) repeat,
+    radial-gradient(
+      90% 70% at 50% 0%,
+      var(--color-ivory-50),
+      var(--color-ivory-100) 60%,
+      var(--color-ivory-200)
+    );
+}
+
+.interiorInner {
+  display: grid;
+  gap: 0.875rem;
+  /* Clear the sun medallion that overlaps the top of the opening. */
+  padding: 14cqw clamp(0.875rem, 5cqw, 1.5rem) clamp(0.875rem, 5cqw, 1.5rem);
+}
+
+.or {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--ink-on-paper-muted);
+}
+.or::before,
+.or::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--rule-on-paper);
+  opacity: 0.5;
+}
+
+.form {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.leaves {
+  position: absolute;
+  display: flex;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+
+.leaf {
+  flex: 1;
+  height: 100%;
+  backface-visibility: hidden;
+  will-change: transform;
+}
+.leafLeft {
+  transform-origin: 0 50%;
+}
+.leafRight {
+  transform-origin: 100% 50%;
+}
+
+.leafArt {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.mirrored {
+  transform: scaleX(-1);
+}
+
+/* Doors stand open unless the script has taken charge of them. */
+.doorway:not([data-closed]) .leafLeft {
+  transform: rotateY(-80deg);
+}
+.doorway:not([data-closed]) .leafRight {
+  transform: rotateY(80deg);
+}
+.doorway[data-open] .leaves {
+  visibility: hidden;
+}
+
+/* Light falling out of the open door onto the ground. */
+.spill {
+  position: absolute;
+  left: 50%;
+  bottom: -9%;
+  width: 150%;
+  height: 22%;
+  translate: -50% 0;
+  background: radial-gradient(
+    closest-side,
+    rgb(246 184 63 / 0.28),
+    rgb(240 160 32 / 0.08) 60%,
+    transparent
+  );
+  pointer-events: none;
+}
+.doorway[data-closed] .spill {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* The smallest phones (320px): tighten the interior so it never clips. */
+@container (max-width: 300px) {
+  .interiorInner {
+    gap: 0.5rem;
+    padding: 10cqw 0.75rem 0.625rem;
+  }
+  .interiorInner > a {
+    min-height: 3rem;
+  }
+  .form {
+    gap: 0.5rem;
+  }
+  .form input {
+    min-height: 2.75rem;
+  }
+}
+
+/* The toran hangs across the top of the whole scene. */
+.toran {
+  position: absolute;
+  inset: 0 0 auto;
+  pointer-events: none;
+}
+
+.toranArt {
+  display: block;
+  width: 100%;
+  height: clamp(84px, 11vw, 150px);
+}
+
+/* Sky lanterns hang either side of the doorway on wide screens. */
+.lanterns {
+  display: none;
+}
+
+@media (min-width: 64rem) {
+  .lanterns {
+    display: block;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .lanternLeft,
+  .lanternRight {
+    position: absolute;
+    top: -6%;
+    width: 4.75rem;
+    height: auto;
+  }
+  .lanternLeft {
+    left: -6.5rem;
+  }
+  .lanternRight {
+    right: -6.5rem;
+    top: 2%;
+  }
+}
+
+.petals {
+  position: absolute;
+  inset: -4% -30% -10%;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 3;
+}

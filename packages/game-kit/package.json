@@ -1,0 +1,17 @@
+{
+  "name": "@diwali/game-kit",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@diwali/tsconfig": "workspace:*",
+    "@types/node": "^22.19.0"
+  }
+}

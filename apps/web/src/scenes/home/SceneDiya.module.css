@@ -1,0 +1,387 @@
+/*
+ * Scene 1 has two layouts:
+ *  - camera (motion allowed, JS running): a tall section with a sticky
+ *    stage; lamps are absolutely positioned and moved by diya-stage.ts.
+ *  - static (reduced motion, or no JS): the same markup in normal flow, a
+ *    lit row of lamps between the two passages of copy.
+ * Until JS has chosen, the stage stays dark (the scene begins dark anyway).
+ */
+
+.scene {
+  position: relative;
+  background: var(--color-night-950);
+}
+
+.scene[data-mode='camera'] {
+  height: 320svh;
+}
+
+.stage {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    var(--grain-light) repeat,
+    radial-gradient(120% 80% at 50% 70%, var(--color-night-900), var(--color-night-950) 70%);
+}
+
+.scene[data-mode='camera'] .stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+}
+
+.scene[data-mode='static'] .stage,
+.scene:not([data-mode]) .stage {
+  display: grid;
+  gap: clamp(2.5rem, 6vw, 4rem);
+  justify-items: center;
+  padding: clamp(6rem, 14vw, 9rem) 1rem clamp(4rem, 10vw, 7rem);
+}
+
+:global([data-js]) .scene:not([data-mode]) .stage > * {
+  visibility: hidden;
+  /* If the script never runs, show the static scene after a moment. */
+  animation: reveal 0s 4s forwards;
+}
+
+@keyframes reveal {
+  to {
+    visibility: visible;
+  }
+}
+
+/* --- Architecture -------------------------------------------------------- */
+
+.architecture {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.scene:not([data-mode='camera']) .architecture,
+.scene:not([data-mode='camera']) .ambient {
+  display: none;
+}
+
+.archOuter,
+.archInner {
+  fill: none;
+  stroke: var(--color-brass-500);
+  vector-effect: non-scaling-stroke;
+}
+.archOuter {
+  stroke-width: 1.5;
+}
+.archInner {
+  stroke-width: 1;
+  stroke-opacity: 0.55;
+}
+
+.architecture :global(.bulb) {
+  fill: var(--color-marigold-200);
+}
+.architecture :global(.bulb-glow) {
+  fill: var(--color-marigold-500);
+  opacity: 0.22;
+}
+
+.ledge line {
+  stroke: var(--color-brass-500);
+  stroke-width: 1.5;
+}
+.ledge line + line {
+  stroke-width: 1;
+  stroke-opacity: 0.6;
+}
+
+/* --- Light --------------------------------------------------------------- */
+
+.ambient {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 130vmax;
+  aspect-ratio: 1;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  background: radial-gradient(
+    closest-side,
+    rgb(240 160 32 / 0.3),
+    rgb(217 133 15 / 0.12) 36%,
+    rgb(168 42 26 / 0.035) 64%,
+    transparent
+  );
+  /* Screen adds light to the indigo instead of fogging it brown. */
+  mix-blend-mode: screen;
+  will-change: transform, opacity;
+  z-index: 0;
+}
+
+/* --- Lamps --------------------------------------------------------------- */
+
+.row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: clamp(0.25rem, 1.2vw, 1rem);
+}
+
+.scene[data-mode='camera'] .row {
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.lamp {
+  position: relative;
+  width: clamp(2.25rem, 8.5vw, 6rem);
+  aspect-ratio: 400 / 360;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.scene[data-mode='camera'] .lamp {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--lamp-base, 300px);
+  transform-origin: 50% 100%;
+  will-change: transform;
+}
+
+.lamp[data-off-stage] {
+  display: none;
+}
+
+@media (max-width: 639.98px) {
+  .scene:not([data-mode='camera']) .lamp[data-offset='-4'],
+  .scene:not([data-mode='camera']) .lamp[data-offset='4'] {
+    display: none;
+  }
+}
+
+.lamp[data-offset='0'] {
+  cursor: pointer;
+}
+
+.body {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: auto;
+}
+
+.halo {
+  position: absolute;
+  left: 50%;
+  top: 54%;
+  width: 210%;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  pointer-events: none;
+  background: radial-gradient(
+    closest-side,
+    rgb(246 184 63 / 0.34),
+    rgb(240 160 32 / 0.14) 34%,
+    rgb(224 74 44 / 0.05) 62%,
+    transparent
+  );
+}
+
+.flame {
+  position: absolute;
+  left: 42.5%;
+  top: 39.2%;
+  width: 15%;
+  height: 30%;
+  transform-origin: 50% 94%;
+}
+
+.lean,
+.flickerA,
+.flickerB {
+  width: 100%;
+  height: 100%;
+  transform-origin: 50% 94%;
+}
+
+.flickerB svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.lamp[data-lit] .flickerA {
+  animation: flicker-a 2.3s var(--ease-flame) infinite alternate;
+  animation-delay: var(--flicker-delay, 0s);
+}
+.lamp[data-lit] .flickerB {
+  animation: flicker-b 1.37s ease-in-out infinite alternate;
+  animation-delay: var(--flicker-delay, 0s);
+}
+
+@keyframes flicker-a {
+  0% {
+    transform: scale(1, 1) skewX(0deg);
+  }
+  30% {
+    transform: scale(0.97, 1.04) skewX(-1.6deg);
+  }
+  55% {
+    transform: scale(1.02, 0.97) skewX(1deg);
+  }
+  80% {
+    transform: scale(0.98, 1.05) skewX(-0.6deg);
+  }
+  100% {
+    transform: scale(1.01, 0.99) skewX(1.8deg);
+  }
+}
+@keyframes flicker-b {
+  0% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(1.035);
+  }
+  100% {
+    transform: scaleY(0.975);
+  }
+}
+
+.spark {
+  position: absolute;
+  left: 50%;
+  top: 67%;
+  width: 9%;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    var(--color-ivory-50),
+    var(--color-marigold-400) 40%,
+    transparent 70%
+  );
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Unlit lamps in the camera scene: a dim shape in the dark. */
+.scene[data-mode='camera'] .lamp:not([data-lit]) .body {
+  opacity: 0;
+}
+
+.silhouette {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: auto;
+}
+
+.scene:not([data-mode='camera']) .silhouette {
+  display: none;
+}
+.scene[data-mode='camera'] .lamp:not([data-lit]) .flame,
+.scene[data-mode='camera'] .lamp:not([data-lit]) .halo {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* --- Copy ---------------------------------------------------------------- */
+
+.copy {
+  position: relative;
+  z-index: 2;
+  width: min(42rem, 100% - 2.5rem);
+  margin-inline: auto;
+  text-align: center;
+}
+
+.scene[data-mode='camera'] .opening {
+  position: absolute;
+  inset: clamp(5rem, 12svh, 8rem) 0 auto;
+}
+
+.scene[data-mode='camera'] .title {
+  position: absolute;
+  inset: 15svh 0 auto;
+}
+
+@media (max-width: 639.98px) {
+  .scene[data-mode='camera'] .title {
+    inset: 17svh 0 auto;
+  }
+}
+
+.eyebrow {
+  color: var(--color-marigold-400);
+}
+
+.headline {
+  margin-top: 1rem;
+  color: var(--color-ivory-100);
+  font-size: clamp(2.375rem, 1.4rem + 3.6vw, 4.5rem);
+}
+
+.devanagari {
+  margin-top: 0.75rem;
+  color: var(--color-marigold-200);
+}
+
+.prompt {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+  gap: 0.75rem;
+  text-align: center;
+}
+
+.scene[data-mode='camera'] .prompt {
+  position: absolute;
+  inset: auto 0 max(1.25rem, 3.5svh);
+}
+
+.scene:not([data-mode='camera']) .prompt {
+  display: none;
+}
+
+.promptHint {
+  color: var(--ink-on-night-muted);
+}
+
+.word {
+  display: block;
+  color: var(--color-marigold-200);
+}
+
+.gloss {
+  margin-top: 0.5rem;
+  color: var(--color-ivory-100);
+}
+
+.etymology {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem 1.25rem;
+  margin-top: 1.25rem;
+  color: var(--color-marigold-400);
+}
+
+.etymology i {
+  font-family: var(--font-story);
+  font-style: italic;
+  font-size: 1.0625rem;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--color-ivory-100);
+}

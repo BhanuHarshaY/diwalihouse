@@ -1,0 +1,24 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "diwali-house-realtime",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-01",
+  "durable_objects": {
+    "bindings": [
+      { "name": "PARTY_ROOM", "class_name": "PartyRoom" },
+      { "name": "GAME_ROOM", "class_name": "GameRoom" },
+      { "name": "COURTYARD_ROOM", "class_name": "CourtyardRoom" },
+      { "name": "MEHFIL_ROOM", "class_name": "MehfilRoom" },
+    ],
+  },
+  "migrations": [
+    { "tag": "v1", "new_sqlite_classes": ["PartyRoom", "GameRoom"] },
+    { "tag": "v2", "new_sqlite_classes": ["CourtyardRoom"] },
+    { "tag": "v3", "new_sqlite_classes": ["MehfilRoom"] },
+  ],
+  "vars": {
+    // Browsers that may open sockets. Comma-separated. Set per environment.
+    "ALLOWED_ORIGINS": "http://localhost:3000",
+  },
+  "observability": { "enabled": true },
+}

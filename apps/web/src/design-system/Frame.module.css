@@ -1,0 +1,106 @@
+/*
+ * Frames are the matchbox-label border: an outer rule, a hairline inset
+ * rule, and diamond studs where the inset rule turns a corner.
+ */
+.frame {
+  position: relative;
+  isolation: isolate;
+  --frame-pad: clamp(1.25rem, 1rem + 2.4vw, 2.5rem);
+  --frame-inset: 6px;
+}
+
+.frame::before {
+  content: '';
+  position: absolute;
+  inset: var(--frame-inset);
+  border: 1px solid var(--frame-rule-inner);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.paper {
+  --frame-rule-outer: var(--color-brass-700);
+  --frame-rule-inner: color-mix(in oklab, var(--color-brass-700) 55%, transparent);
+  --frame-stud: var(--color-vermilion-600);
+  padding: var(--frame-pad);
+  border: 1.5px solid var(--frame-rule-outer);
+  box-shadow: 0 6px 0 var(--color-night-950);
+}
+
+.night {
+  --frame-rule-outer: var(--rule-on-night);
+  --frame-rule-inner: color-mix(in oklab, var(--color-brass-500) 30%, transparent);
+  --frame-stud: var(--color-marigold-500);
+  padding: var(--frame-pad);
+  color: var(--ink-on-night);
+  background: var(--surface-night-raised);
+  border: 1.5px solid var(--frame-rule-outer);
+}
+
+.stud {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  background: var(--frame-stud);
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+.stud[data-corner='tl'] {
+  top: calc(var(--frame-inset) - 3px);
+  left: calc(var(--frame-inset) - 3px);
+}
+.stud[data-corner='tr'] {
+  top: calc(var(--frame-inset) - 3px);
+  right: calc(var(--frame-inset) - 3px);
+}
+.stud[data-corner='bl'] {
+  bottom: calc(var(--frame-inset) - 3px);
+  left: calc(var(--frame-inset) - 3px);
+}
+.stud[data-corner='br'] {
+  bottom: calc(var(--frame-inset) - 3px);
+  right: calc(var(--frame-inset) - 3px);
+}
+
+/*
+ * Stamp: a perforated postage-stamp edge (the folk-poster reference). Four
+ * mask layers each punch half-holes along one edge; intersecting them keeps
+ * all four rows of holes. The printed border sits on .stampInner.
+ */
+.stamp {
+  --perf-step: 11px;
+  --perf-hole: 3.6px;
+  padding: 7px;
+  background: var(--color-ivory-50);
+  color: var(--ink-on-paper);
+  color-scheme: light;
+  -webkit-mask:
+    radial-gradient(circle var(--perf-hole) at 50% 0, #0000 96%, #000) 0 0 / var(--perf-step) 100%
+      round no-repeat,
+    radial-gradient(circle var(--perf-hole) at 50% 100%, #0000 96%, #000) 0 0 / var(--perf-step)
+      100% round no-repeat,
+    radial-gradient(circle var(--perf-hole) at 0 50%, #0000 96%, #000) 0 0 / 100% var(--perf-step)
+      no-repeat round,
+    radial-gradient(circle var(--perf-hole) at 100% 50%, #0000 96%, #000) 0 0 / 100%
+      var(--perf-step) no-repeat round;
+  -webkit-mask-composite: source-in;
+  mask:
+    radial-gradient(circle var(--perf-hole) at 50% 0, #0000 96%, #000) 0 0 / var(--perf-step) 100%
+      round no-repeat,
+    radial-gradient(circle var(--perf-hole) at 50% 100%, #0000 96%, #000) 0 0 / var(--perf-step)
+      100% round no-repeat,
+    radial-gradient(circle var(--perf-hole) at 0 50%, #0000 96%, #000) 0 0 / 100% var(--perf-step)
+      no-repeat round,
+    radial-gradient(circle var(--perf-hole) at 100% 50%, #0000 96%, #000) 0 0 / 100%
+      var(--perf-step) no-repeat round;
+  mask-composite: intersect;
+}
+
+.stampInner {
+  position: relative;
+  height: 100%;
+  padding: clamp(1rem, 0.8rem + 1.6vw, 1.75rem);
+  border: 2px solid var(--stamp-ink, var(--color-vermilion-600));
+  outline: 1px solid var(--stamp-ink, var(--color-vermilion-600));
+  outline-offset: -6px;
+}

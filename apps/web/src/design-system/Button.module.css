@@ -1,0 +1,144 @@
+/*
+ * Buttons are printed tabs: flat ink, a hairline inner rule, and a solid
+ * offset edge that the button presses down into.
+ */
+.button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65em;
+  min-height: 3rem;
+  padding: 0 1.6rem;
+  font-family: var(--font-utility);
+  font-variation-settings: 'wdth' 78;
+  font-weight: 650;
+  font-size: 0.9375rem;
+  line-height: 1;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  color: var(--btn-fg);
+  background: var(--btn-bg);
+  border: 1.5px solid var(--btn-edge);
+  border-radius: 2px;
+  box-shadow: 0 var(--btn-depth, 4px) 0 var(--btn-edge);
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    transform 110ms var(--ease-print),
+    box-shadow 110ms var(--ease-print),
+    background-color 160ms ease;
+}
+
+.button::before {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border: 1px solid color-mix(in oklab, var(--btn-fg) 28%, transparent);
+  border-radius: 1px;
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .button:hover {
+    background: var(--btn-bg-hover);
+  }
+}
+
+.button:active:not([aria-disabled='true']) {
+  transform: translateY(calc(var(--btn-depth, 4px) - 1px));
+  box-shadow: 0 1px 0 var(--btn-edge);
+}
+
+.button[aria-disabled='true'] {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.button[data-pending='true'] {
+  cursor: progress;
+}
+
+.marigold {
+  --btn-bg: var(--color-marigold-500);
+  --btn-bg-hover: var(--color-marigold-400);
+  --btn-fg: var(--color-night-950);
+  --btn-edge: var(--color-marigold-700);
+}
+
+.vermilion {
+  --btn-bg: var(--color-vermilion-600);
+  --btn-bg-hover: var(--color-vermilion-500);
+  --btn-fg: var(--color-ivory-50);
+  --btn-edge: var(--color-vermilion-800);
+}
+
+.outline {
+  --btn-bg: transparent;
+  --btn-bg-hover: color-mix(in oklab, var(--color-ivory-100) 7%, transparent);
+  --btn-fg: var(--color-ivory-100);
+  --btn-edge: var(--color-brass-500);
+  --btn-depth: 0px;
+}
+
+.ink {
+  --btn-bg: transparent;
+  --btn-bg-hover: color-mix(in oklab, var(--color-night-900) 6%, transparent);
+  --btn-fg: var(--color-night-900);
+  --btn-edge: var(--color-night-900);
+  --btn-depth: 0px;
+}
+
+.sm {
+  min-height: 2.25rem;
+  padding: 0 1rem;
+  font-size: 0.8125rem;
+  --btn-depth: 3px;
+}
+.sm.outline,
+.sm.ink {
+  --btn-depth: 0px;
+}
+
+.lg {
+  min-height: 3.5rem;
+  padding: 0 2rem;
+  font-size: 1rem;
+}
+
+.block {
+  width: 100%;
+}
+
+/* Three printed dots that take turns, for pending actions. */
+.pending {
+  display: inline-flex;
+  gap: 3px;
+}
+.pending i {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: dot 900ms ease-in-out infinite;
+}
+.pending i:nth-child(2) {
+  animation-delay: 150ms;
+}
+.pending i:nth-child(3) {
+  animation-delay: 300ms;
+}
+
+@keyframes dot {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  40% {
+    opacity: 1;
+  }
+}

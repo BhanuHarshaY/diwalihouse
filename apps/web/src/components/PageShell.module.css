@@ -1,0 +1,36 @@
+.shell {
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem clamp(1rem, 4vw, 2.5rem);
+  border-bottom: 1px solid color-mix(in oklab, var(--color-brass-500) 25%, transparent);
+}
+
+.back {
+  color: var(--ink-on-night-muted);
+  text-decoration: none;
+}
+.back:hover {
+  color: var(--color-ivory-100);
+}
+
+.narrow,
+.wide {
+  width: 100%;
+  margin-inline: auto;
+  padding: clamp(2rem, 6vw, 4rem) 1rem clamp(4rem, 10vw, 6rem);
+}
+.narrow {
+  max-width: 36rem;
+}
+.wide {
+  max-width: 76rem;
+  padding-inline: clamp(1rem, 4vw, 2.5rem);
+}

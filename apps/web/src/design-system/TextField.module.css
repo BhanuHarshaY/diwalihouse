@@ -1,0 +1,88 @@
+.field {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.label {
+  font-family: var(--font-utility);
+  font-variation-settings: 'wdth' 78;
+  font-weight: 650;
+  font-size: 0.8125rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.hint {
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: var(--ink-on-paper-muted);
+}
+
+.input {
+  width: 100%;
+  min-height: 3.125rem;
+  padding: 0.7rem 0.9rem 0.6rem;
+  font-family: var(--font-utility);
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--ink-on-paper);
+  background: var(--color-ivory-50);
+  border: 1.5px solid var(--color-night-900);
+  border-radius: 2px;
+  box-shadow: inset 0 3px 0 color-mix(in oklab, var(--color-night-900) 7%, transparent);
+  transition:
+    border-color 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.input::placeholder {
+  color: color-mix(in oklab, var(--ink-on-paper-muted) 60%, transparent);
+}
+
+.input:focus-visible {
+  outline: none;
+  border-color: var(--color-vermilion-600);
+  box-shadow:
+    inset 0 3px 0 color-mix(in oklab, var(--color-night-900) 7%, transparent),
+    0 0 0 3px color-mix(in oklab, var(--color-vermilion-600) 22%, transparent);
+}
+
+.input[aria-invalid='true'] {
+  border-color: var(--danger-on-paper);
+}
+
+/* Messages are written in the story face, the way a postcard is handwritten. */
+.multiline {
+  min-height: 8.5rem;
+  resize: vertical;
+  font-family: var(--font-story);
+  line-height: 1.5;
+}
+
+.code {
+  font-variant-numeric: tabular-nums;
+  font-variation-settings: 'wdth' 90;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.error {
+  display: flex;
+  gap: 0.4rem;
+  align-items: baseline;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--danger-on-paper);
+}
+
+.error::before {
+  content: '';
+  flex: none;
+  width: 6px;
+  height: 6px;
+  translate: 0 -2px;
+  background: currentColor;
+  transform: rotate(45deg);
+}

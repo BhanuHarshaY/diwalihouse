@@ -1,0 +1,20 @@
+/* A string of festival bulbs: the dotted lines that run through every reference. */
+.dotRule {
+  height: 6px;
+  background: radial-gradient(
+      circle,
+      var(--dot-color, var(--color-marigold-400)) 1.6px,
+      transparent 2.1px
+    )
+    0 50% / var(--dot-gap, 12px) 100% round no-repeat;
+}
+
+.dotRuleVertical {
+  width: 6px;
+  background: radial-gradient(
+      circle,
+      var(--dot-color, var(--color-marigold-400)) 1.6px,
+      transparent 2.1px
+    )
+    50% 0 / 100% var(--dot-gap, 12px) no-repeat round;
+}

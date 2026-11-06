@@ -1,0 +1,8 @@
+pnpm-lock.yaml
+.next
+dist
+coverage
+design/references
+apps/web/public/assets
+apps/web/next-env.d.ts
+apps/web/test-results

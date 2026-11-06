@@ -1,0 +1,285 @@
+/*
+ * Idle motion for illustrations. Everything here is paused until a parent
+ * carries [data-playing] (set by <Playable> only while it is on screen), so
+ * off-screen art costs nothing. Reduced motion removes the loops entirely and
+ * leaves every illustration in its resting, fully visible pose.
+ */
+
+.window {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.flicker,
+.sway,
+.swayLate,
+.radiate,
+.twinkle,
+.stepA,
+.stepB,
+.bob,
+.rise,
+.spin,
+.shimmer,
+.breathe,
+.wave {
+  transform-box: fill-box;
+  animation-play-state: paused;
+}
+
+:global([data-playing])
+  :is(
+    .flicker,
+    .sway,
+    .swayLate,
+    .radiate,
+    .twinkle,
+    .stepA,
+    .stepB,
+    .bob,
+    .rise,
+    .spin,
+    .shimmer,
+    .breathe,
+    .wave
+  ) {
+  animation-play-state: running;
+}
+
+.flicker {
+  transform-origin: 50% 100%;
+  animation: flicker 1.7s ease-in-out infinite alternate;
+}
+
+.sway {
+  transform-origin: 50% 0;
+  animation: sway 4.2s ease-in-out infinite alternate;
+}
+
+.swayLate {
+  transform-origin: 50% 0;
+  animation: sway 3.6s ease-in-out -1.4s infinite alternate;
+}
+
+.radiate {
+  transform-origin: 50% 100%;
+  animation: radiate 3.2s ease-in-out infinite alternate;
+}
+
+.twinkle {
+  transform-origin: 50% 50%;
+  animation: twinkle 2.4s ease-in-out infinite alternate;
+}
+
+.stepA,
+.stepB {
+  animation: step 4.8s ease-in-out infinite;
+}
+
+.stepB {
+  animation-delay: 0.9s;
+}
+
+.bob {
+  animation: bob 3s ease-in-out infinite alternate;
+}
+
+.rise {
+  transform-origin: 50% 50%;
+  animation: rise 3.6s ease-out infinite;
+}
+
+.spin {
+  transform-origin: 50% 50%;
+  animation: spin 80s linear infinite;
+}
+
+.shimmer {
+  animation: shimmer 2.2s ease-in-out infinite alternate;
+}
+
+.breathe {
+  transform-origin: 50% 100%;
+  animation: breathe 5s ease-in-out infinite alternate;
+}
+
+/* A raised right arm waving from the shoulder (the bottom-left of its box). */
+.wave {
+  transform-origin: 0% 100%;
+  animation: wave 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes wave {
+  from {
+    transform: rotate(-7deg);
+  }
+  to {
+    transform: rotate(9deg);
+  }
+}
+
+/* People arrive one after another the first time their window is seen. */
+.arrive {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transition:
+    opacity 700ms var(--ease-print),
+    transform 900ms var(--ease-print);
+  transition-delay: calc(var(--i, 0) * 120ms + 120ms);
+}
+
+:global([data-js]) .reveal:not([data-seen]) .arrive {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+@keyframes flicker {
+  0% {
+    transform: scale(1, 1) skewX(0deg);
+  }
+  40% {
+    transform: scale(0.94, 1.1) skewX(-3deg);
+  }
+  100% {
+    transform: scale(1.03, 0.95) skewX(2.5deg);
+  }
+}
+
+@keyframes sway {
+  from {
+    transform: rotate(-3.5deg);
+  }
+  to {
+    transform: rotate(3.5deg);
+  }
+}
+
+@keyframes radiate {
+  from {
+    transform: scale(0.97);
+    opacity: 0.75;
+  }
+  to {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+}
+
+@keyframes twinkle {
+  from {
+    transform: scale(0.6);
+    opacity: 0.35;
+  }
+  to {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+/* Footprints walking in: appear, hold, fade. Rest pose is fully visible. */
+@keyframes step {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  14%,
+  78% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes bob {
+  from {
+    transform: translateY(1.5px) rotate(-1deg);
+  }
+  to {
+    transform: translateY(-2.5px) rotate(1.5deg);
+  }
+}
+
+@keyframes rise {
+  0% {
+    opacity: 0;
+    transform: translate(0, 6px) scale(0.8);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-10px, -34px) scale(1.05);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes shimmer {
+  from {
+    opacity: 0.25;
+  }
+  to {
+    opacity: 0.85;
+  }
+}
+
+@keyframes breathe {
+  from {
+    transform: rotate(-1.5deg);
+  }
+  to {
+    transform: rotate(1.5deg);
+  }
+}
+
+/* Entrance: the motif rises into its window the first time it is seen. */
+:global([data-js]) .reveal:not([data-seen]) [data-motif] {
+  opacity: 0;
+  transform: translateY(14px) scale(0.96);
+}
+
+.reveal [data-motif] {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transition:
+    opacity 900ms var(--ease-print) 150ms,
+    transform 1100ms var(--ease-print) 150ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flicker,
+  .sway,
+  .swayLate,
+  .radiate,
+  .twinkle,
+  .stepA,
+  .stepB,
+  .bob,
+  .rise,
+  .spin,
+  .shimmer,
+  .breathe,
+  .wave {
+    animation: none !important;
+  }
+  :global([data-js]) .reveal:not([data-seen]) .arrive {
+    opacity: 1;
+    transform: none;
+  }
+  .rise {
+    opacity: 0;
+  }
+  :global([data-js]) .reveal:not([data-seen]) [data-motif] {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -1,0 +1,327 @@
+.hall {
+  display: grid;
+  gap: clamp(2.5rem, 6vw, 4rem);
+}
+
+.masthead {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 48rem;
+}
+
+.live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--live);
+}
+
+/* "Light means live": the one lit dot on the page says the party is on. */
+.liveDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--live);
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--live) 22%, transparent);
+}
+
+.columns {
+  display: grid;
+  gap: clamp(2.5rem, 6vw, 3.5rem);
+}
+
+@media (min-width: 60rem) {
+  .columns {
+    grid-template-columns: minmax(0, 1fr) 21rem;
+    align-items: start;
+  }
+  .secondary {
+    position: sticky;
+    top: 2rem;
+  }
+}
+
+/* On phones the host's invitation comes first: it is what a new host needs. */
+@media (max-width: 59.98rem) {
+  .secondary[data-has-invite] {
+    order: -1;
+  }
+}
+
+.primary,
+.secondary {
+  display: grid;
+  gap: clamp(2.5rem, 6vw, 3.5rem);
+  align-content: start;
+}
+
+.sectionHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--rule-on-night);
+}
+
+/* --- Guests ---------------------------------------------------------------- */
+
+.guests {
+  display: grid;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.guest {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.875rem 0;
+  border-bottom: 1px dashed color-mix(in oklab, var(--color-brass-500) 30%, transparent);
+}
+
+.guestText {
+  flex: 1;
+  min-width: 0;
+}
+
+.guestName {
+  font-variation-settings: 'wdth' 92;
+  font-weight: 600;
+  font-size: 1.125rem;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.you {
+  font-weight: 400;
+  color: var(--ink-on-night-muted);
+}
+
+.role {
+  margin-top: 0.25rem;
+  color: var(--color-marigold-400);
+}
+
+/* --- Invitation stamp ------------------------------------------------------ */
+
+.stamp {
+  --stamp-ink: var(--color-vermilion-600);
+  text-align: center;
+}
+
+.stampEyebrow {
+  color: var(--color-vermilion-700);
+}
+
+.qr {
+  display: block;
+  width: min(100%, 13rem);
+  height: auto;
+  margin: 1rem auto 0;
+}
+
+.codeLabel {
+  margin-top: 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-on-paper-muted);
+}
+
+.code {
+  font-size: 1.875rem;
+  line-height: 1.1;
+  letter-spacing: 0.14em;
+  color: var(--ink-on-paper);
+  user-select: all;
+}
+
+.stampActions {
+  display: grid;
+  gap: 0.625rem;
+  margin-top: 1.25rem;
+}
+
+.stampStatus {
+  min-height: 1.4em;
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--ink-on-paper-muted);
+}
+
+.dialogError {
+  display: block;
+  margin-top: 0.75rem;
+  font-weight: 600;
+  color: var(--danger-on-paper);
+}
+
+.self {
+  display: flex;
+  justify-content: center;
+}
+
+.note {
+  color: var(--ink-on-night-muted);
+  text-align: center;
+}
+
+/* --- Rooms ----------------------------------------------------------------- */
+
+.roomList {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.75rem 1rem;
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+}
+
+@media (min-width: 40rem) {
+  .roomList {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem 1.25rem;
+  }
+}
+
+.room {
+  display: grid;
+  gap: 0.875rem;
+  align-content: start;
+}
+
+.roomWindow {
+  overflow: hidden;
+  border-radius: 2px;
+  box-shadow: 0 5px 0 var(--color-night-950);
+  /* Closed rooms are lit, but not yet at full brightness. */
+  filter: saturate(0.85);
+}
+
+.roomText {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.roomName {
+  font-family: var(--font-masthead);
+  font-size: 1.25rem;
+  line-height: 1.15;
+}
+
+.roomHi {
+  font-family: var(--font-story);
+  color: var(--color-marigold-200);
+}
+
+.roomLine {
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  color: var(--ink-on-night-muted);
+}
+
+.roomStatus {
+  color: color-mix(in oklab, var(--ink-on-night-muted) 75%, transparent);
+}
+
+.askHost {
+  --frame-pad: 1.5rem;
+}
+
+.askHostEyebrow {
+  margin-bottom: 0.5rem;
+  color: var(--color-marigold-400);
+}
+
+.checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  margin-top: 1rem;
+  font-weight: 600;
+  color: var(--ink-on-paper);
+  cursor: pointer;
+}
+
+.checkbox input {
+  flex: none;
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-top: 0.15rem;
+  accent-color: var(--color-vermilion-600);
+}
+
+/* Empty house: friends on their way, until the first guest arrives. */
+.waiting {
+  display: grid;
+  gap: 1.25rem;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 40rem) {
+  .waiting {
+    grid-template-columns: minmax(0, 16rem) minmax(0, 1fr);
+    gap: 1.75rem;
+  }
+}
+
+.waitingArt {
+  overflow: hidden;
+  border-radius: 2px;
+  box-shadow: 0 5px 0 var(--color-night-950);
+}
+
+/* An open room is a door you can walk through. */
+.roomLink {
+  display: grid;
+  gap: 0.875rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.room[data-open] .roomWindow {
+  filter: none;
+}
+
+@media (hover: hover) {
+  .roomLink:hover .roomWindow {
+    box-shadow:
+      0 0 0 2px var(--live),
+      0 5px 0 var(--color-night-950);
+  }
+}
+
+.roomOpen {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--live);
+}
+
+/* Someone is here right now. */
+.here {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-left: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--live);
+}
+
+.here::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--live);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--live) 22%, transparent);
+}

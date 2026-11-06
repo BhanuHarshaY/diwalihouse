@@ -1,0 +1,266 @@
+@import 'tailwindcss';
+
+/*
+ * Diwali House design tokens.
+ *
+ * The palette is closed: Tailwind's default colours are removed so every
+ * colour on screen comes from this list. Names describe the pigment, not a
+ * role; semantic roles are defined further down. See design/visual-direction.md.
+ */
+@theme {
+  --color-*: initial;
+
+  --color-night-950: #0a0d27;
+  --color-night-900: #12163d;
+  --color-night-800: #1a2052;
+  --color-night-700: #252d6b;
+  --color-night-600: #343e8a;
+
+  --color-peacock-800: #084a49;
+  --color-peacock-700: #0a5e5c;
+  --color-peacock-600: #0e7471;
+  --color-peacock-500: #138a84;
+  --color-peacock-300: #6cbcb1;
+
+  --color-marigold-700: #b06908;
+  --color-marigold-600: #d9850f;
+  --color-marigold-500: #f0a020;
+  --color-marigold-400: #f6b83f;
+  --color-marigold-200: #fbdc97;
+
+  --color-vermilion-800: #7e1f14;
+  --color-vermilion-700: #a82a1a;
+  --color-vermilion-600: #c9381f;
+  --color-vermilion-500: #e04a2c;
+
+  --color-ivory-50: #fbf5e6;
+  --color-ivory-100: #f4ead2;
+  --color-ivory-200: #e9dab8;
+  --color-ivory-300: #d8c59a;
+
+  --color-brass-700: #8c6a27;
+  --color-brass-500: #c29a48;
+  --color-brass-400: #d8b565;
+
+  --color-maroon-900: #3a1014;
+  --color-maroon-800: #5e1a1e;
+
+  /* Festive pink: a seasoning, never a surface. */
+  --color-rani-500: #d9457a;
+
+  /* Warm grounds for arch windows (after the arch-window reference). */
+  --color-jamun-900: #3b1030;
+  --color-jamun-700: #5e1a45;
+  --color-gulab-400: #ec7b8a;
+
+  /* Skin tones for people, light to deep. Used only in illustration. */
+  --color-mitti-100: #f2cba6;
+  --color-mitti-300: #d9a073;
+  --color-mitti-500: #b5764e;
+  --color-mitti-700: #85523a;
+  --color-mitti-900: #573427;
+
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --font-*: initial;
+  --font-masthead: var(--font-rozha), 'Iowan Old Style', Georgia, serif;
+  --font-story:
+    var(--font-tiro), var(--font-tiro-gurmukhi), var(--font-tiro-bangla), 'Iowan Old Style',
+    Georgia, serif;
+  --font-utility: var(--font-anek), system-ui, sans-serif;
+
+  --ease-print: cubic-bezier(0.2, 0.7, 0.1, 1);
+  --ease-flame: cubic-bezier(0.45, 0, 0.2, 1);
+}
+
+:root {
+  /* Semantic roles. Components use these, not pigments, where a role exists. */
+  --surface-night: var(--color-night-900);
+  --surface-night-raised: var(--color-night-800);
+  --surface-paper: var(--color-ivory-100);
+  --ink-on-night: var(--color-ivory-100);
+  --ink-on-night-muted: var(--color-ivory-300);
+  --ink-on-paper: var(--color-night-900);
+  --ink-on-paper-muted: #3d4170;
+  --rule-on-night: color-mix(in oklab, var(--color-brass-500) 70%, transparent);
+  --rule-on-paper: var(--color-brass-700);
+  --danger-on-paper: var(--color-vermilion-700);
+  --danger-on-night: #ff8a6b;
+  /* "Light means live": reserved for things happening right now. */
+  --live: var(--color-marigold-500);
+  --focus-ring: var(--color-marigold-400);
+
+  --grain-light: url('/assets/textures/grain-light.svg');
+  --grain-dark: url('/assets/textures/grain-dark.svg');
+
+  /* Solid, offset print shadows. No blur anywhere except light itself. */
+  --print-shadow-sm: 0 2px 0 var(--print-shadow-color, var(--color-night-950));
+  --print-shadow: 0 4px 0 var(--print-shadow-color, var(--color-night-950));
+
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    background: var(--surface-night);
+  }
+
+  body {
+    min-height: 100svh;
+    color: var(--ink-on-night);
+    background:
+      var(--grain-light) repeat,
+      var(--surface-night);
+    font-family: var(--font-utility);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    font-variation-settings: 'wdth' 100;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: var(--color-marigold-400);
+    color: var(--color-night-950);
+  }
+
+  :focus-visible {
+    outline: 2px dashed var(--focus-ring);
+    outline-offset: 3px;
+  }
+
+  :where(h1, h2, h3, h4) {
+    font-weight: 400;
+    text-wrap: balance;
+  }
+
+  :where(p) {
+    text-wrap: pretty;
+  }
+
+  [lang='hi'] {
+    /* Devanagari needs room for matras above and below the headline. */
+    line-height: 1.6;
+  }
+
+  /* Tracking breaks the headline stroke that joins Indic letters. */
+  :is([lang='hi'], [lang='sa'], [lang='ne'], [lang='bn'], [lang='pa']) {
+    letter-spacing: 0;
+    text-transform: none;
+  }
+}
+
+/*
+ * Type roles. Every piece of text uses one of these, so the hierarchy stays
+ * consistent across rooms. See design/typography.md for the full scale.
+ */
+@layer components {
+  .type-masthead-xl,
+  .type-masthead-lg,
+  .type-masthead-md {
+    font-family: var(--font-masthead);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+  .type-masthead-xl {
+    font-size: clamp(3.75rem, 1.5rem + 9vw, 10rem);
+    line-height: 1.05;
+  }
+  .type-masthead-lg {
+    font-size: clamp(2.5rem, 1.5rem + 4.2vw, 5.5rem);
+    line-height: 1.04;
+  }
+  .type-masthead-md {
+    font-size: clamp(1.875rem, 1.4rem + 2vw, 3.25rem);
+    line-height: 1.08;
+  }
+
+  .type-story-lg {
+    font-family: var(--font-story);
+    font-size: clamp(1.25rem, 1.05rem + 0.7vw, 1.625rem);
+    line-height: 1.45;
+  }
+  .type-story {
+    font-family: var(--font-story);
+    font-size: 1.125rem;
+    line-height: 1.6;
+  }
+
+  .type-title {
+    font-family: var(--font-utility);
+    font-variation-settings: 'wdth' 88;
+    font-weight: 600;
+    font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.625rem);
+    line-height: 1.2;
+    letter-spacing: -0.005em;
+  }
+
+  /* Condensed sign-painter caps: labels, buttons, borders. */
+  .type-label {
+    font-family: var(--font-utility);
+    font-variation-settings: 'wdth' 78;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    line-height: 1.1;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .type-eyebrow {
+    font-family: var(--font-utility);
+    font-variation-settings: 'wdth' 75;
+    font-weight: 500;
+    font-size: 0.8125rem;
+    line-height: 1.2;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .type-small {
+    font-family: var(--font-utility);
+    font-size: 0.9375rem;
+    line-height: 1.45;
+  }
+  .type-numeral {
+    font-family: var(--font-utility);
+    font-variant-numeric: tabular-nums;
+    font-variation-settings: 'wdth' 82;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+  }
+
+  /* Paper: the ivory printed surface for reading and forms. */
+  .surface-paper {
+    --print-shadow-color: var(--color-night-950);
+    color: var(--ink-on-paper);
+    background:
+      var(--grain-dark) repeat,
+      var(--surface-paper);
+    color-scheme: light;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,469 @@
+/* Shared furniture for the Game Bazaar games. */
+
+.status {
+  padding: 1.5rem;
+  text-align: center;
+  color: var(--ink-on-night-muted);
+}
+
+.screen {
+  display: grid;
+  gap: clamp(1.25rem, 3vw, 2rem);
+}
+
+@media (min-width: 64rem) {
+  .screen {
+    grid-template-columns: minmax(0, 1fr) 18rem;
+    align-items: start;
+  }
+  .side {
+    position: sticky;
+    top: 2rem;
+  }
+}
+
+.main {
+  display: grid;
+  gap: clamp(1.25rem, 3vw, 2rem);
+  min-width: 0;
+}
+
+.header {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.header :global(.type-eyebrow) {
+  color: var(--color-marigold-400);
+}
+
+.hi {
+  font-family: var(--font-story);
+  font-size: 1.25rem;
+  color: var(--color-marigold-200);
+}
+
+.panel {
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  border: 1px solid var(--rule-on-night);
+  border-radius: 4px;
+  background: var(--surface-night-raised);
+}
+
+.panelTitle {
+  font-family: var(--font-utility);
+  font-variation-settings: 'wdth' 88;
+  font-weight: 650;
+  font-size: 1.125rem;
+}
+
+.muted {
+  color: var(--ink-on-night-muted);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+  align-items: center;
+}
+
+.notice {
+  min-height: 1.4em;
+  font-size: 0.9375rem;
+  color: var(--danger-on-night);
+}
+
+.good {
+  color: var(--live);
+  font-weight: 600;
+}
+
+.people {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.person {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.75rem 0.3rem 0.3rem;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--color-night-950) 45%, transparent);
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+
+.side {
+  display: grid;
+  gap: 1rem;
+}
+
+.log {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  color: var(--ink-on-night-muted);
+}
+
+.log li:first-child {
+  color: var(--color-ivory-100);
+}
+
+.scores {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.scores li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.scores li:first-child {
+  color: var(--color-marigold-200);
+  font-weight: 650;
+}
+
+.points {
+  font-variant-numeric: tabular-nums;
+}
+
+.timer {
+  font-family: var(--font-utility);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--live);
+}
+
+/* --- Tambola ------------------------------------------------------------------ */
+
+.caller {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+/* The called number, as a painted wooden ball. */
+.ball {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: clamp(5.5rem, 20vw, 7.5rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 35% 30%,
+    var(--color-marigold-400),
+    var(--color-marigold-600) 70%
+  );
+  box-shadow:
+    inset 0 0 0 6px var(--color-vermilion-600),
+    inset 0 0 0 9px var(--color-marigold-200),
+    0 6px 0 var(--color-night-950);
+  color: var(--color-night-950);
+}
+
+.ballNumber {
+  font-family: var(--font-masthead);
+  font-size: clamp(2.25rem, 1.5rem + 3vw, 3.25rem);
+  line-height: 1;
+}
+
+.ballHi {
+  font-family: var(--font-story);
+  font-size: 1rem;
+  line-height: 1;
+  color: var(--color-vermilion-700);
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  gap: 3px;
+}
+
+.boardCell {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  border-radius: 3px;
+  font-size: clamp(0.625rem, 0.5rem + 0.6vw, 0.875rem);
+  font-variant-numeric: tabular-nums;
+  color: color-mix(in oklab, var(--ink-on-night-muted) 55%, transparent);
+  background: color-mix(in oklab, var(--color-night-950) 40%, transparent);
+}
+
+.boardCell[data-called] {
+  color: var(--color-night-950);
+  font-weight: 700;
+  background: var(--color-marigold-400);
+}
+
+.boardCell[data-last] {
+  background: var(--color-ivory-50);
+  box-shadow: 0 0 0 2px var(--live);
+}
+
+/* A Tambola ticket: printed on paper, nine columns, three rows. */
+.ticket {
+  display: grid;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+  gap: 2px;
+  padding: 6px;
+  border: 1.5px solid var(--color-brass-700);
+  border-radius: 3px;
+  background: var(--color-ivory-100);
+}
+
+.slot {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1 / 1.05;
+  border: 0;
+  border-radius: 2px;
+  font-family: var(--font-utility);
+  font-weight: 650;
+  font-size: clamp(0.875rem, 0.6rem + 1.2vw, 1.25rem);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-night-900);
+  background: var(--color-ivory-50);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.slot:disabled {
+  cursor: default;
+  background: color-mix(in oklab, var(--color-brass-500) 16%, var(--color-ivory-100));
+}
+
+.slot[data-called]:not([data-marked]) {
+  box-shadow: inset 0 0 0 2px var(--color-marigold-500);
+}
+
+/* A daub of vermilion, the way a sketch pen marks a paper ticket. */
+.slot[data-marked] {
+  color: var(--color-ivory-50);
+  background: radial-gradient(circle, var(--color-vermilion-600) 62%, var(--color-ivory-50) 64%);
+}
+
+.prizes {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.prize {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed var(--rule-on-night);
+}
+
+.prizeName {
+  font-weight: 650;
+}
+
+/* --- Raja Mantri Chor Sipahi ------------------------------------------------------ */
+
+.chits {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.875rem;
+}
+
+@media (min-width: 48rem) {
+  .chits {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* A folded paper chit. */
+.chit {
+  display: grid;
+  justify-items: center;
+  gap: 0.4rem;
+  padding: 1rem 0.75rem;
+  border-radius: 3px;
+  text-align: center;
+  color: var(--color-night-900);
+  background: var(--color-ivory-100);
+  box-shadow:
+    inset 0 0 0 1.5px var(--color-brass-700),
+    0 5px 0 var(--color-night-950);
+}
+
+.chit[data-hidden] {
+  background:
+    repeating-linear-gradient(
+      135deg,
+      transparent 0 9px,
+      color-mix(in oklab, var(--color-brass-500) 18%, transparent) 9px 10px
+    ),
+    var(--color-ivory-200);
+}
+
+.chit[data-mine] {
+  box-shadow:
+    inset 0 0 0 1.5px var(--color-brass-700),
+    0 0 0 3px var(--live),
+    0 5px 0 var(--color-night-950);
+}
+
+.chitRole {
+  font-family: var(--font-masthead);
+  font-size: 1.5rem;
+  line-height: 1.1;
+}
+
+.chitRole[data-role='raja'] {
+  color: var(--color-marigold-700);
+}
+.chitRole[data-role='mantri'] {
+  color: var(--color-peacock-700);
+}
+.chitRole[data-role='chor'] {
+  color: var(--color-vermilion-700);
+}
+.chitRole[data-role='sipahi'] {
+  color: var(--color-night-700);
+}
+
+.chitHi {
+  font-family: var(--font-story);
+  font-size: 1.125rem;
+}
+
+.chitName {
+  font-weight: 650;
+  font-size: 0.9375rem;
+}
+
+/* --- Charades ---------------------------------------------------------------------- */
+
+.teams {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 40rem) {
+  .teams {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.team {
+  display: grid;
+  gap: 0.75rem;
+  align-content: start;
+  padding: 1rem;
+  border-radius: 4px;
+  border: 1.5px solid var(--team-colour);
+  background: color-mix(in oklab, var(--team-colour) 12%, transparent);
+}
+
+.team[data-team='0'] {
+  --team-colour: var(--color-marigold-500);
+}
+.team[data-team='1'] {
+  --team-colour: var(--color-peacock-300);
+}
+
+.team[data-active] {
+  box-shadow: 0 0 0 2px var(--team-colour);
+}
+
+.teamName {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-masthead);
+  font-size: 1.375rem;
+  color: var(--team-colour);
+}
+
+/* The film card only the actor sees. */
+.filmCard {
+  display: grid;
+  gap: 0.5rem;
+  justify-items: center;
+  padding: clamp(1.25rem, 4vw, 2rem);
+  border-radius: 4px;
+  text-align: center;
+  color: var(--color-night-900);
+  background: var(--color-ivory-50);
+  box-shadow:
+    inset 0 0 0 2px var(--color-vermilion-600),
+    inset 0 0 0 7px var(--color-ivory-50),
+    inset 0 0 0 8px var(--color-vermilion-600),
+    0 6px 0 var(--color-night-950);
+}
+
+.filmTitle {
+  font-family: var(--font-masthead);
+  font-size: clamp(1.75rem, 1.2rem + 3vw, 3rem);
+  line-height: 1.1;
+}
+
+.guessForm {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.guessForm input {
+  flex: 1;
+  min-width: 0;
+  min-height: 3rem;
+  padding: 0.6rem 0.85rem;
+  font: inherit;
+  font-weight: 500;
+  color: var(--ink-on-paper);
+  background: var(--color-ivory-50);
+  border: 1.5px solid var(--color-brass-500);
+  border-radius: 2px;
+}
+
+.guesses {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.guesses li {
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  color: var(--ink-on-night-muted);
+  background: color-mix(in oklab, var(--color-night-950) 45%, transparent);
+  text-decoration: line-through;
+}
+
+.winnerLine {
+  font-family: var(--font-masthead);
+  font-size: clamp(1.5rem, 1.2rem + 1.5vw, 2.25rem);
+  color: var(--color-marigold-200);
+}

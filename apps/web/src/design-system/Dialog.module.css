@@ -1,0 +1,50 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: color-mix(in oklab, var(--color-night-950) 78%, transparent);
+  animation: fade 160ms ease-out;
+}
+
+.content {
+  position: fixed;
+  z-index: 51;
+  left: 50%;
+  top: 50%;
+  width: min(28rem, calc(100vw - 2rem));
+  max-height: calc(100svh - 2rem);
+  overflow: auto;
+  translate: -50% -50%;
+  animation: rise 220ms var(--ease-print);
+}
+
+.title {
+  font-family: var(--font-masthead);
+  font-size: 1.75rem;
+  line-height: 1.15;
+}
+
+.description {
+  margin-top: 0.5rem;
+  color: var(--ink-on-paper-muted);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    translate: -50% calc(-50% + 12px);
+  }
+}

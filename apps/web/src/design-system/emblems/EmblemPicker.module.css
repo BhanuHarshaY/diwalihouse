@@ -1,0 +1,91 @@
+.picker {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+.legend {
+  margin-bottom: 0.75rem;
+  font-family: var(--font-utility);
+  font-variation-settings: 'wdth' 78;
+  font-weight: 650;
+  font-size: 0.8125rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.5rem 0.25rem;
+}
+
+@media (min-width: 30rem) {
+  .grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+.option {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 0.35rem;
+  padding: 0.5rem 0.125rem 0.45rem;
+  border-radius: 2px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.medallion {
+  display: block;
+  border-radius: 50%;
+  transition:
+    transform 160ms var(--ease-print),
+    box-shadow 160ms var(--ease-print);
+}
+
+.name {
+  font-size: 0.75rem;
+  line-height: 1.15;
+  text-align: center;
+  color: var(--ink-on-paper-muted);
+}
+
+@media (hover: hover) {
+  .option:hover .medallion {
+    transform: translateY(-2px);
+  }
+}
+
+.option:has(input:checked) .medallion {
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 0 2.5px var(--color-ivory-100),
+    0 0 0 4.5px var(--color-vermilion-600),
+    0 4px 0 4.5px var(--color-vermilion-800);
+}
+
+.option:has(input:checked) .name {
+  color: var(--ink-on-paper);
+  font-weight: 650;
+}
+
+.option:has(input:focus-visible) {
+  outline: 2px dashed var(--color-vermilion-600);
+  outline-offset: 0;
+}
+
+.error {
+  margin-top: 0.5rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--danger-on-paper);
+}

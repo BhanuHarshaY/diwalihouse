@@ -1,0 +1,9 @@
+{
+  "extends": "@diwali/tsconfig/library.json",
+  "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "erasableSyntaxOnly": true,
+    "lib": ["ES2023"]
+  },
+  "include": ["src"]
+}

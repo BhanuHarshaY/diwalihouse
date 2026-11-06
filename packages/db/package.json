@@ -1,0 +1,23 @@
+{
+  "name": "@diwali/db",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./migrate": "./src/migrate.ts",
+    "./testing": "./src/testing.ts"
+  },
+  "scripts": {
+    "migrate": "node src/cli.ts migrate",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "postgres": "^3.4.9"
+  },
+  "devDependencies": {
+    "@diwali/tsconfig": "workspace:*",
+    "@types/node": "^22.19.0"
+  }
+}

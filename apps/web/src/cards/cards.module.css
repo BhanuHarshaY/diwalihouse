@@ -1,0 +1,396 @@
+/* --- Cards ------------------------------------------------------------------ */
+
+.card {
+  --w: 3rem;
+  width: var(--w);
+  aspect-ratio: 60 / 84;
+  perspective: 600px;
+  flex: none;
+  animation: deal 500ms var(--ease-print) both;
+  animation-delay: calc(var(--deal-i, 0) * 90ms);
+}
+.card[data-size='sm'] {
+  --w: 1.6rem;
+}
+.card[data-size='lg'] {
+  --w: clamp(4.5rem, 20vw, 6.25rem);
+}
+
+.cardInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 600ms var(--ease-print);
+}
+
+/* Face-down by default; flipping shows the face. */
+.card:not([data-face]) .cardInner {
+  transform: rotateY(180deg);
+}
+
+.cardFace,
+.cardBack {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 6%;
+  box-shadow: 0 3px 0 color-mix(in oklab, var(--color-night-950) 70%, transparent);
+}
+.cardBack {
+  transform: rotateY(180deg);
+}
+
+@keyframes deal {
+  from {
+    opacity: 0;
+    translate: 0 -14px;
+  }
+}
+
+/* --- Room layout -------------------------------------------------------------- */
+
+.room {
+  display: grid;
+  gap: clamp(1.25rem, 3vw, 2rem);
+}
+
+@media (min-width: 64rem) {
+  .room {
+    grid-template-columns: minmax(0, 1fr) 18rem;
+    align-items: start;
+  }
+  .felt,
+  .mine {
+    grid-column: 1;
+  }
+  .log {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    position: sticky;
+    top: 2rem;
+  }
+}
+
+/* The table: peacock baize inside a brass rail. */
+.felt {
+  position: relative;
+  display: grid;
+  gap: 1.5rem;
+  padding: clamp(1.25rem, 3vw, 2.25rem);
+  border-radius: clamp(1.5rem, 6vw, 5rem);
+  background: radial-gradient(
+    80% 70% at 50% 45%,
+    var(--color-peacock-600),
+    var(--color-peacock-800) 100%
+  );
+  box-shadow:
+    inset 0 0 0 3px var(--color-brass-500),
+    inset 0 0 0 9px var(--color-peacock-800),
+    inset 0 0 0 10px color-mix(in oklab, var(--color-brass-400) 60%, transparent),
+    0 8px 0 var(--color-night-950);
+}
+
+.tableMeta {
+  text-align: center;
+  color: var(--color-marigold-200);
+}
+
+.opponents {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.seat {
+  display: grid;
+  justify-items: center;
+  gap: 0.2rem;
+  min-width: 6.25rem;
+  padding: 0.75rem 0.625rem;
+  border-radius: 10px;
+  background: color-mix(in oklab, var(--color-night-950) 32%, transparent);
+  transition: box-shadow 200ms ease;
+}
+
+/* Light means live: the player whose turn it is. */
+.seat[data-turn] {
+  box-shadow:
+    0 0 0 2px var(--live),
+    0 0 22px color-mix(in oklab, var(--live) 45%, transparent);
+}
+
+.seat[data-status='packed'] {
+  opacity: 0.5;
+}
+
+.seatTop {
+  position: relative;
+}
+
+.dealer {
+  position: absolute;
+  right: -0.5rem;
+  bottom: -0.25rem;
+  display: grid;
+  place-items: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--color-night-950);
+  background: var(--color-ivory-50);
+  box-shadow: 0 0 0 1.5px var(--color-brass-500);
+}
+
+.seatName {
+  font-weight: 650;
+  font-size: 0.9375rem;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+  text-align: center;
+}
+
+.seatStack {
+  font-size: 0.875rem;
+  color: var(--color-marigold-200);
+}
+
+.seatStatus {
+  color: var(--color-ivory-200);
+}
+
+.seatCards {
+  display: flex;
+  gap: 2px;
+  margin-top: 0.35rem;
+}
+
+.handLabel {
+  font-family: var(--font-masthead);
+  font-size: 1rem;
+  color: var(--color-marigold-200);
+  text-align: center;
+}
+
+.empty {
+  padding: 1rem;
+  color: var(--color-ivory-200);
+}
+
+.pot {
+  display: grid;
+  justify-items: center;
+  gap: 0.15rem;
+  text-align: center;
+}
+
+.potValue {
+  font-size: clamp(2rem, 1.5rem + 2vw, 3rem);
+  line-height: 1;
+  color: var(--color-ivory-50);
+}
+
+.stake {
+  color: var(--color-ivory-200);
+}
+
+.winner {
+  font-family: var(--font-masthead);
+  font-size: clamp(1.5rem, 1.2rem + 1.5vw, 2.25rem);
+  color: var(--color-marigold-200);
+}
+
+/* --- Your seat ---------------------------------------------------------------- */
+
+.mine {
+  display: grid;
+  gap: 1rem;
+  justify-items: center;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  border: 1px solid var(--rule-on-night);
+  border-radius: 4px;
+  background: var(--surface-night-raised);
+}
+
+.mine[data-turn] {
+  box-shadow: 0 0 0 2px var(--live);
+}
+
+.mineHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.mineStatus {
+  margin-left: auto;
+  color: var(--color-marigold-400);
+  text-align: right;
+}
+
+.myCards {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.watching,
+.connecting {
+  padding: 1rem;
+  color: var(--ink-on-night-muted);
+  text-align: center;
+}
+
+.prompt {
+  display: grid;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 1rem;
+  border-radius: 4px;
+  color: var(--color-night-950);
+  background: var(--color-marigold-200);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.625rem;
+}
+
+.notice {
+  min-height: 1.4em;
+  font-size: 0.9375rem;
+  color: var(--danger-on-night);
+  text-align: center;
+}
+
+.sideshowNote {
+  color: var(--ink-on-night-muted);
+}
+
+/* --- Log ---------------------------------------------------------------------- */
+
+.log {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem 1.125rem;
+  border: 1px solid var(--rule-on-night);
+  border-radius: 4px;
+}
+
+.log :global(.type-eyebrow) {
+  color: var(--color-marigold-400);
+}
+
+.log ol {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  color: var(--ink-on-night-muted);
+}
+
+.log ol li:first-child {
+  color: var(--color-ivory-100);
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.back {
+  color: var(--ink-on-night-muted);
+}
+
+.virtual {
+  font-size: 0.8125rem;
+  color: var(--ink-on-night-muted);
+}
+
+/* --- Lobby -------------------------------------------------------------------- */
+
+.lobby {
+  display: grid;
+  gap: 2rem;
+}
+
+.tables {
+  display: grid;
+  gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media (min-width: 40rem) {
+  .tables {
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  }
+}
+
+.tableCard {
+  display: grid;
+  gap: 0.35rem;
+  padding: 1.25rem;
+  border-radius: 1.5rem;
+  color: var(--color-ivory-50);
+  text-decoration: none;
+  background: radial-gradient(
+    90% 80% at 50% 40%,
+    var(--color-peacock-600),
+    var(--color-peacock-800)
+  );
+  box-shadow:
+    inset 0 0 0 2px var(--color-brass-500),
+    0 5px 0 var(--color-night-950);
+}
+
+.tableCard:hover {
+  box-shadow:
+    inset 0 0 0 2px var(--color-marigold-400),
+    0 5px 0 var(--color-night-950);
+}
+
+.tableName {
+  font-family: var(--font-masthead);
+  font-size: 1.5rem;
+}
+
+.boots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* Phones: keep your own hand and actions within reach. */
+@media (max-width: 39.98rem) {
+  .felt {
+    gap: 0.875rem;
+    padding: 1rem 0.75rem 1.25rem;
+    border-radius: 1.75rem;
+  }
+  .seat {
+    min-width: 5.25rem;
+    padding: 0.5rem;
+  }
+  .potValue {
+    font-size: 1.75rem;
+  }
+}

@@ -1,0 +1,21 @@
+node_modules/
+.next/
+dist/
+.turbo/
+coverage/
+*.tsbuildinfo
+.env
+.env.local
+.env.*.local
+!.env.example
+apps/web/test-results/
+apps/web/playwright-report/
+apps/web/blob-report/
+.DS_Store
+.vercel
+.wrangler/
+next-env.d.ts
+
+# Third-party reference images: licence unknown, kept on disk only (see the README there).
+design/references/*
+!design/references/README.md
