@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { Wordmark } from '@/design-system/Wordmark';
 import styles from './PageShell.module.css';
+import { SiteFooter } from './SiteFooter';
 
 /** Frame for the inner pages: wordmark bar, centred column, quiet footer. */
 export function PageShell({
@@ -26,6 +27,7 @@ export function PageShell({
       <main id="main" className={width === 'wide' ? styles.wide : styles.narrow}>
         {children}
       </main>
+      <SiteFooter />
     </div>
   );
 }

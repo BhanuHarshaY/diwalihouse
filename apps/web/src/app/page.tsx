@@ -1,3 +1,4 @@
+import { SiteFooter } from '@/components/SiteFooter';
 import { HomeHeader } from '@/scenes/home/HomeHeader';
 import { SceneDiya } from '@/scenes/home/SceneDiya';
 import { SceneEnter } from '@/scenes/home/SceneEnter';
@@ -16,6 +17,7 @@ export default function HomePage() {
         <ScenePeople />
         <SceneEnter />
       </main>
+      <SiteFooter />
     </>
   );
 }
